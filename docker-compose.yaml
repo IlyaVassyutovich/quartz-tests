@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  db:
+    hostname: "db"
+    build: "./src/DB/"
+    environment:
+      - ACCEPT_EULA=true
+      - SA_PASSWORD=qweQWE123
