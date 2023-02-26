@@ -1,11 +1,14 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 
 namespace QuartzTests.QuartzWorker;
 
 internal static class QuartzExtensions
 {
-	public static IServiceCollection AddQuartz(this IServiceCollection services)
+	public static IServiceCollection AddQuartz(
+		this IServiceCollection services,
+		IConfiguration configuration)
 	{
 		services.AddQuartz(qc =>
 		{
@@ -14,7 +17,18 @@ internal static class QuartzExtensions
 			qc.SchedulerId = BuildSchedulerId();
 			qc.SchedulerName = "default-scheduler";
 
-			qc.UseInMemoryStore();
+			qc.UsePersistentStore(pso =>
+			{
+				pso.PerformSchemaValidation = true;
+				pso.UseClustering();
+				pso.UseSqlServer(apo =>
+				{
+					apo.TablePrefix = "[quartz].";
+					apo.ConnectionString = configuration.GetConnectionString("Default")
+						?? throw new InvalidOperationException("Failed to get connection string for database.");
+				});
+				pso.UseBinarySerializer();
+			});
 
 			qc.ScheduleJob<TestJob>(
 				tc =>
