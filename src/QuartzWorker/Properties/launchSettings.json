@@ -1,0 +1,13 @@
+﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "QuartzWorker": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development",
+        "QUARTZ_SCHEDULER_ID": "IDE",
+        "WAIT_FOR_DATABASE": "false"
+      }
+    }
+  }
+}

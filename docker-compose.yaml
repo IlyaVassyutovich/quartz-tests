@@ -7,5 +7,13 @@ services:
     environment:
       - ACCEPT_EULA=true
       - SA_PASSWORD=qweQWE123
-  quartz_worker:
+  quartz_worker_00:
     build: "./src/QuartzWorker"
+    environment:
+      - QUARTZ_SCHEDULER_ID=00
+      - WAIT_FOR_DATABASE=true
+  quartz_worker_01:
+    build: "./src/QuartzWorker"
+    environment:
+      - QUARTZ_SCHEDULER_ID=01
+      - WAIT_FOR_DATABASE=true
