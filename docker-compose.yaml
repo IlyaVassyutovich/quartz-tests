@@ -8,6 +8,4 @@ services:
       - ACCEPT_EULA=true
       - SA_PASSWORD=qweQWE123
   quartz_worker:
-    build:
-      context: "."
-      dockerfile: "QuartzWorker.Dockerfile"
+    build: "./src/QuartzWorker"

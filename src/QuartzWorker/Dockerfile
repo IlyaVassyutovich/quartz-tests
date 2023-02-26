@@ -3,13 +3,8 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /build
-RUN ls
-COPY ["src/QuartzWorker/QuartzWorker.csproj", "build/QuartzWorker/"]
-RUN dotnet restore "build/QuartzWorker/QuartzWorker.csproj"
+RUN ls -l
 COPY . .
-RUN ls
-WORKDIR "/build/src/QuartzWorker"
-RUN ls
 RUN dotnet build "QuartzWorker.csproj" -c Release -o /app/build
 
 FROM build AS publish
